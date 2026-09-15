@@ -43,13 +43,19 @@
                             <a href="{{ route('admin.user.edit', $u->id) }}" class="p-2 text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-lg hover:bg-amber-500/20">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
-                            <form action="{{ route('admin.user.destroy', $u->id) }}" method="POST" data-confirm="Yakin hapus user ini?">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="p-2 text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </form>
+                            @if (Auth::id() === $u->id)
+                                <span class="group relative p-2 text-slate-600 bg-slate-500/10 border border-slate-500/20 rounded-lg cursor-not-allowed" title="Akun yang sedang digunakan tidak dapat dihapus">
+                                    <i class="fa-solid fa-lock"></i>
+                                </span>
+                            @else
+                                <form action="{{ route('admin.user.destroy', $u->id) }}" method="POST" data-confirm="Yakin hapus user ini?">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="p-2 text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg hover:bg-red-500/20">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                     @empty

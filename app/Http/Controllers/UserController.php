@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
         public function index()
     {
-        // Jika primary key kamu bernama 'id':
-        $users = User::orderBy('id')->get(); 
-        
-        // Atau bisa juga cukup ambil semua data tanpa pengurutan:
-        // $users = User::all();
+        $users = User::orderByRaw("
+                CASE LOWER(role)
+                    WHEN 'owner' THEN 1
+                    WHEN 'admin' THEN 2
+                    WHEN 'petugas' THEN 3
+                    ELSE 4
+                END
+            ")
+            ->orderBy('id')
+            ->get();
 
         return view('user.index', compact('users'));
     }
@@ -73,6 +79,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if (Auth::id() === $user->id) {
+            return redirect()
+                ->route('admin.user.index')
+                ->with('error', 'Akun yang sedang digunakan tidak dapat dihapus.');
+        }
+
         $user->delete();
         return redirect()->route('admin.user.index')->with('success', 'User berhasil dihapus!');
     }
