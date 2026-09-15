@@ -1,8 +1,8 @@
 @extends('layout.app')
 
 @section('content')
-<div class="max-w-2xl">
-    <div class="mb-6 flex items-center justify-between">
+<div class="max-w-2xl mx-auto space-y-6">
+    <div class="flex items-center justify-between">
         <h2 class="text-2xl font-semibold text-white">Edit Kendaraan</h2>
         <a href="{{ route('admin.kendaraan.index') }}" class="text-sm font-medium text-blue-100 hover:text-white">
             <i class="fa-solid fa-arrow-left mr-2"></i>Kembali

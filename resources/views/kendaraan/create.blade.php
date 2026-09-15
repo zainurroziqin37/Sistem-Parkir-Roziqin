@@ -1,12 +1,13 @@
 @extends('layout.app')
 
 @section('content')
-<div class="mb-6 flex items-center justify-between">
-    <h2 class="text-2xl font-semibold text-white">Tambah Kendaraan</h2>
-    <a href="{{ route('admin.kendaraan.index') }}" class="text-sm font-medium text-blue-100 hover:text-white"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
-</div>
+<div class="max-w-2xl mx-auto space-y-6">
+    <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-semibold text-white">Tambah Kendaraan</h2>
+        <a href="{{ route('admin.kendaraan.index') }}" class="text-sm font-medium text-blue-100 hover:text-white"><i class="fa-solid fa-arrow-left mr-2"></i>Kembali</a>
+    </div>
 
-<div class="max-w-2xl rounded-2xl border border-blue-500/25 bg-[#071426] p-6 shadow-xl shadow-blue-950/30">
+    <div class="rounded-2xl border border-blue-500/25 bg-[#071426] p-6 shadow-xl shadow-blue-950/30">
     <form action="{{ route('admin.kendaraan.store') }}" method="POST" class="space-y-4">
         @csrf
         <div>
@@ -34,5 +35,6 @@
             <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">Simpan</button>
         </div>
     </form>
+    </div>
 </div>
 @endsection
