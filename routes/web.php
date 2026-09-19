@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard', [OwnerDashboard::class, 'index'])->name('dashboard');
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/cetak', [LaporanController::class, 'cetak'])->name('laporan.cetak');
+        Route::get('/log', [LogAktivitasController::class, 'index'])->name('log.index');
     });
 
 });

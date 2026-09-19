@@ -149,6 +149,10 @@
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 hover:bg-blue-500/10 hover:text-blue-400 text-slate-300 {{ request()->routeIs('owner.laporan.*') ? 'bg-blue-500/20 text-blue-400 border border-blue-500/20' : '' }}">
                         <i class="fa-solid fa-file-invoice-dollar w-7 shrink-0"></i><span class="sidebar-label">Rekap Transaksi</span>
                     </a>
+                    <a href="{{ route('owner.log.index') }}"
+                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 hover:bg-blue-500/10 hover:text-blue-400 text-slate-300 {{ request()->routeIs('owner.log.*') ? 'bg-blue-500/20 text-blue-400 border border-blue-500/20' : '' }}">
+                        <i class="fa-solid fa-clipboard-list w-7 shrink-0"></i><span class="sidebar-label">Log Aktivitas</span>
+                    </a>
                 @endif
 
             </nav>                
