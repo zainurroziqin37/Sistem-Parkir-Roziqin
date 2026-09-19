@@ -7,6 +7,7 @@ use App\Models\Tarif;
 use App\Models\AreaParkir;
 use App\Models\Kendaraan;
 use App\Models\LogAktivitas;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -113,6 +114,9 @@ class TransaksiController extends Controller
             'status'       => 'masuk',
         ]);
 
+        // Tambahkan jumlah terisi pada area parkir (+1)
+        $area->increment('terisi');
+
         // LOG: Catat aktivitas cetak tiket parkir masuk
         LogAktivitas::catat("Mencetak tiket parkir masuk ID #{$transaksi->id_parkir} untuk plat nomor {$platNomor}", "PARKIR");
 
@@ -170,6 +174,14 @@ class TransaksiController extends Controller
             'status'       => 'keluar',
         ]);
 
+        // Kurangi jumlah terisi pada area parkir (-1)
+        if ($transaksi->id_area) {
+            $area = AreaParkir::find($transaksi->id_area);
+            if ($area && $area->terisi > 0) {
+                $area->decrement('terisi');
+            }
+        }
+
         // LOG: Catat aktivitas pembayaran parkir keluar
         $nominalFormat = number_format($totalBiaya, 0, ',', '.');
         LogAktivitas::catat("Memproses parkir keluar ID #{$transaksi->id_parkir} ({$transaksi->id_kendaraan}) - Total Biaya: Rp {$nominalFormat}", "PARKIR");
@@ -182,6 +194,10 @@ class TransaksiController extends Controller
     public function struk($id)
     {
         $transaksi = Transaksi::with(['tarif', 'area', 'user'])->findOrFail($id);
-        return view('transaksi.struk', compact('transaksi'));
+        $owner = User::whereRaw('LOWER(role) = ?', ['owner'])
+            ->orderBy('id')
+            ->first();
+
+        return view('transaksi.struk', compact('transaksi', 'owner'));
     }
 }

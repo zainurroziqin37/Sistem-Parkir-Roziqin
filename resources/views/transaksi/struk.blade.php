@@ -53,6 +53,13 @@
             </div>
         </div>
 
+        <div class="mt-6 border-t border-dashed border-slate-300 pt-4 text-center text-xs text-slate-500">
+            <p class="uppercase tracking-wider">Pemilik / Owner</p>
+            <p class="mt-1 font-semibold text-slate-700">
+                {{ $owner?->nama_lengkap ?: $owner?->username ?: '-' }}
+            </p>
+        </div>
+
         <p class="mt-6 text-center text-xs text-slate-500">Terima kasih telah menggunakan layanan kami.</p>
     </div>
 
